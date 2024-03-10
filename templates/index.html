@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Estimate Testing Time</title>
+</head>
+<body>
+    <h1>Estimate Testing Time</h1>
+    <form action="/" method="post">
+        <label for="tester_name">Tester Name:</label>
+        <input type="text" id="tester_name" name="tester_name" required><br><br>
+        <label for="feature_name">Feature Name:</label>
+        <input type="text" id="feature_name" name="feature_name" required><br><br>
+        <label for="writing_checks">Writing Checks:</label>
+        <input type="number" id="writing_checks" name="writing_checks" step="any" required><br><br>
+        <label for="execution_checks">Execution Checks:</label>
+        <input type="number" id="execution_checks" name="execution_checks" step="any" required><br><br>
+        <label for="execution_retests">Execution Retests:</label>
+        <input type="number" id="execution_retests" name="execution_retests" step="any" required><br><br>
+        <input type="submit" value="Calculate">
+    </form>
+
+    {% if result is not none %}
+    <h2>Estimated Testing Time: {{ result }}</h2>
+    {% endif %}
+
+    <h2>All Estimations:</h2>
+    <ul>
+    {% for estimation in estimations %}
+        <li>{{ estimation.tester_name }} ({{ estimation.feature_name }}): {{ estimation.estimate_testing }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
