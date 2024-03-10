@@ -2,25 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Estimate Testing Time</title>
+    <title>All Estimations</title>
 </head>
 <body>
-    <h1>Estimate Testing Time</h1>
-    <form action="/" method="post">
-        <label for="tester_name">Tester Name:</label>
-        <input type="text" id="tester_name" name="tester_name" required><br><br>
-        <label for="writing_checks">Writing Checks:</label>
-        <input type="number" id="writing_checks" name="writing_checks" step="any" required><br><br>
-        <label for="execution_checks">Execution Checks:</label>
-        <input type="number" id="execution_checks" name="execution_checks" step="any" required><br><br>
-        <label for="execution_retests">Execution Retests:</label>
-        <input type="number" id="execution_retests" name="execution_retests" step="any" required><br><br>
-        <input type="submit" value="Calculate">
-    </form>
-    {% if result is not none %}
-    <h2>Estimated Testing Time: {{ result }}</h2>
-    {% endif %}
-    <!-- Добавляем кнопку для перехода на страницу с оценками -->
-    <a href="/estimations"><button type="button">View All Estimations</button></a>
+    <h1>All Estimations</h1>
+    {% for tester_name, estimations in grouped_estimations.items() %}
+        <h2>Tester: {{ tester_name }}</h2>
+        <table border="1">
+            <tr>
+                <th>Feature Name</th>
+                <th>Writing Checks</th>
+                <th>Execution Checks</th>
+                <th>Execution Retests</th>
+                <th>Estimated Testing Time</th>
+            </tr>
+            {% for estimation in estimations %}
+                <tr>
+                    <td>{{ estimation.feature_name }}</td>
+                    <td>{{ estimation.writing_checks }}</td>
+                    <td>{{ estimation.execution_checks }}</td>
+                    <td>{{ estimation.execution_retests }}</td>
+                    <td>{{ estimation.estimate_testing }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+    <a href="/">Back to Home</a>
 </body>
 </html>

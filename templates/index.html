@@ -20,15 +20,7 @@
         <input type="submit" value="Calculate">
     </form>
 
-    {% if result is not none %}
     <h2>Estimated Testing Time: {{ result }}</h2>
-    {% endif %}
 
-    <h2>All Estimations:</h2>
-    <ul>
-    {% for estimation in estimations %}
-        <li>{{ estimation.tester_name }} ({{ estimation.feature_name }}): {{ estimation.estimate_testing }}</li>
-    {% endfor %}
-    </ul>
 </body>
 </html>

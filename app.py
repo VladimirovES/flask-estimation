@@ -52,6 +52,21 @@ def home():
     estimations = Estimation.query.all()
     return render_template('index.html', result=result, estimations=estimations)
 
+
+@app.route('/estimations')
+def estimations():
+    all_estimations = Estimation.query.order_by(Estimation.tester_name).all()
+
+    grouped_estimations = {}
+    for estimation in all_estimations:
+        if estimation.tester_name in grouped_estimations:
+            grouped_estimations[estimation.tester_name].append(estimation)
+        else:
+            grouped_estimations[estimation.tester_name] = [estimation]
+
+    return render_template('estimations.html', grouped_estimations=grouped_estimations)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
