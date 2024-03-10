@@ -32,9 +32,8 @@ def home():
         execution_retests = float(request.form['execution_retests'])
 
         estimate_test_scenario = writing_checks + execution_checks
-        estimate_bugs = execution_retests
-        risks = 0.3 * (estimate_test_scenario + estimate_bugs)
-        estimate_testing = estimate_test_scenario + estimate_bugs + risks
+        risks = 0.3 * (estimate_test_scenario + execution_retests)
+        estimate_testing = estimate_test_scenario + execution_retests + risks
 
         new_estimation = Estimation(
             tester_name=tester_name,
