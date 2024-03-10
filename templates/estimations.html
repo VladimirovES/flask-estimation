@@ -6,15 +6,16 @@
 </head>
 <body>
     <h1>All Estimations</h1>
+     <a href="/">Back to Home</a>
     {% for tester_name, estimations in grouped_estimations.items() %}
         <h2>Tester: {{ tester_name }}</h2>
         <table border="1">
             <tr>
-                <th>Feature Name</th>
-                <th>Writing Checks</th>
-                <th>Execution Checks</th>
-                <th>Execution Retests</th>
-                <th>Estimated Testing Time</th>
+                <th>Feature</th>
+                <th>Создание проверок</th>
+                <th>Прохождение проверок</th>
+                <th>Прохождение ретеста</th>
+                <th>Общее время</th>
             </tr>
             {% for estimation in estimations %}
                 <tr>
@@ -26,7 +27,7 @@
                 </tr>
             {% endfor %}
         </table>
+
     {% endfor %}
-    <a href="/">Back to Home</a>
 </body>
 </html>
