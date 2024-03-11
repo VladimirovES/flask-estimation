@@ -80,9 +80,44 @@
         .view-estimations-button:hover {
             background-color: var(--success-button-hover-color);
         }
+         #timer {
+            position: absolute; /* Абсолютное позиционирование относительно ближайшего относительно позиционированного предка (в данном случае body) */
+            top: 10px; /* Отступ сверху */
+            right: 10px; /* Отступ справа */
+            padding: 10px;
+            color: black;
+            border-radius: var(--border-radius);
+            font-size: 20px;
+        }
+
+        #timer-controls {
+            position: absolute;
+            top: 50px; /* Отступ, чтобы не перекрывать таймер */
+            right: 10px; /* Отступ справа */
+        }
+
+        #timer-controls button {
+            background-color: var(--button-color);
+            color: white;
+            margin-left: 5px;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #timer-controls button:hover {
+            background-color: var(--button-hover-color);
+        }
     </style>
 </head>
 <body>
+<div id="timer">00:00:00</div>
+            <div id="timer-controls">
+                <button id="startStopButton" onclick="toggleTimer()">Start</button>
+                <button onclick="resetTimer()">Reset</button>
+            </div>
+
     <div class="calculator-container">
         <h1>Estimate Testing Time</h1>
         <form action="/" method="post">
@@ -114,6 +149,50 @@
         </div>
         {% endif %}
         <a href="/estimations" class="view-estimations-button" aria-label="View time estimations">Таблица времени</a>
+
     </div>
+    <script>
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let isTimerRunning = false;
+
+        function toggleTimer() {
+            if (!isTimerRunning) {
+                startTimer();
+                document.getElementById("startStopButton").textContent = "Stop";
+            } else {
+                stopTimer();
+                document.getElementById("startStopButton").textContent = "Start";
+            }
+            isTimerRunning = !isTimerRunning;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                document.getElementById("timer").textContent = formatTime(totalSeconds);
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            stopTimer();
+            totalSeconds = 0;
+            isTimerRunning = false;
+            document.getElementById("timer").textContent = formatTime(totalSeconds);
+            document.getElementById("startStopButton").textContent = "Start";
+        }
+
+        function formatTime(totalSeconds) {
+            let hours = Math.floor(totalSeconds / 3600);
+            let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+            let seconds = totalSeconds - hours * 3600 - minutes * 60;
+            return [hours, minutes, seconds].map(v => v < 10 ? "0" + v : v).join(":");
+        }
+    </script>
+
 </body>
 </html>
