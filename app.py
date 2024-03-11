@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -10,6 +10,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
 
 class Estimation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,9 +67,15 @@ def estimations():
     return render_template('estimations.html', grouped_estimations=grouped_estimations)
 
 
+@app.route('/delete/<int:id>')
+def delete_estimation(id):
+    estimation_to_delete = Estimation.query.get_or_404(id)
+    db.session.delete(estimation_to_delete)
+    db.session.commit()
+    return redirect(url_for('estimations'))
+
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-

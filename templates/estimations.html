@@ -2,87 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All Estimations</title>
+    <title>Estimation Table</title>
     <style>
-        :root {
-            --background-color: #f0f0f0;
-            --text-color: #333;
-            --primary-color: #007bff;
-            --primary-color-hover: #0056b3;
-            --table-border-color: #ccc;
-            --table-background-color: #ffffff;
-            --border-radius: 5px;
-        }
-
         body, html {
-            height: 100%;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: var(--background-color);
             font-family: Arial, sans-serif;
-            color: var(--text-color);
+            background-color: #f0f0f0;
         }
-
-        h1, h2 {
-            margin: 20px 0;
-        }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--primary-color-hover);
-        }
-
-        table {
-            border-collapse: collapse;
-            background-color: var(--table-background-color);
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
         }
-
-        table, th, td {
-            border: 1px solid var(--table-border-color);
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-
         th, td {
-            padding: 10px;
             text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
         }
-
         th {
-            background-color: var(--primary-color);
+            background-color: #007bff;
             color: white;
         }
-
-        td {
-            background-color: #FFF;
+        tr:hover {background-color: #f5f5f5;}
+        a {
+            color: #007bff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
-
+        a:hover {
+            text-decoration: underline;
+        }
+        .fa-trash {
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>All Estimations</h1>
-    <a href="/" style="margin-bottom: 20px;">Back to Home</a>
-    {% for tester_name, estimations in grouped_estimations.items() %}
-        <h2>Tester: {{ tester_name }}</h2>
-        <table>
-            <thead>
+    <div class="container">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <a href="/" style="font-size: 24px;"><i class="fas fa-arrow-left"></i> </a>
+        <h1>All Estimations</h1>
+        {% for tester_name, estimations in grouped_estimations.items() %}
+            <h2>Tester: {{ tester_name }}</h2>
+            <table>
                 <tr>
                     <th>Feature</th>
                     <th>Создание проверок</th>
                     <th>Прохождение проверок</th>
                     <th>Прохождение ретеста</th>
                     <th>Общее время</th>
+                    <th> </th>
                 </tr>
-            </thead>
-            <tbody>
                 {% for estimation in estimations %}
                     <tr>
                         <td>{{ estimation.feature_name }}</td>
@@ -90,10 +69,11 @@
                         <td>{{ estimation.execution_checks }}</td>
                         <td>{{ estimation.execution_retests }}</td>
                         <td>{{ estimation.estimate_testing }}</td>
+                        <td><a href="{{ url_for('delete_estimation', id=estimation.id) }}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a></td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-    {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
 </body>
 </html>
