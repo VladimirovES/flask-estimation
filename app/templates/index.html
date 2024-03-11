@@ -81,9 +81,9 @@
             background-color: var(--success-button-hover-color);
         }
          #timer {
-            position: absolute; /* Абсолютное позиционирование относительно ближайшего относительно позиционированного предка (в данном случае body) */
-            top: 10px; /* Отступ сверху */
-            right: 10px; /* Отступ справа */
+            position: absolute;
+            top: 10px;
+            right: 15px;
             padding: 10px;
             color: black;
             border-radius: var(--border-radius);
@@ -92,8 +92,8 @@
 
         #timer-controls {
             position: absolute;
-            top: 50px; /* Отступ, чтобы не перекрывать таймер */
-            right: 10px; /* Отступ справа */
+            top: 50px;
+            right: 25px;
         }
 
         #timer-controls button {
@@ -112,7 +112,7 @@
     </style>
 </head>
 <body>
-<div id="timer">00:00:00</div>
+    <div id="timer">00:00:00</div>
             <div id="timer-controls">
                 <button id="startStopButton" onclick="toggleTimer()">Start</button>
                 <button onclick="resetTimer()">Reset</button>
