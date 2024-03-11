@@ -69,7 +69,7 @@
                         <td>{{ estimation.execution_checks }}</td>
                         <td>{{ estimation.execution_retests }}</td>
                         <td>{{ estimation.estimate_testing }}</td>
-                        <td><a href="{{ url_for('delete_estimation', id=estimation.id) }}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a></td>
+                        <td><a href="{{ url_for('estimations.delete_estimation', id=estimation.id) }}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a></td>
                     </tr>
                 {% endfor %}
             </table>
