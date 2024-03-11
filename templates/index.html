@@ -4,23 +4,34 @@
     <meta charset="UTF-8">
     <title>Estimate Testing Time</title>
     <style>
+        :root {
+            --background-color: #f0f0f0;
+            --form-background-color: #ffffff;
+            --button-color: #007bff;
+            --button-hover-color: #0056b3;
+            --success-button-color: #4CAF50;
+            --success-button-hover-color: #45a049;
+            --border-radius: 5px;
+            --border-color: #ccc;
+        }
+
         body, html {
             height: 100%;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f0f0; /* Цвет фона для красоты, можете изменить */
+            background-color: var(--background-color);
         }
 
         .calculator-container {
             width: 100%;
-            max-width: 600px; /* Максимальная ширина формы */
+            max-width: 600px;
             padding: 20px;
-            background-color: white; /* Цвет фона формы */
-            border-radius: 10px; /* Скругление углов формы */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для формы */
-            text-align: center; /* Выравнивание текста внутри контейнера по центру */
+            background-color: var(--form-background-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         form {
@@ -28,78 +39,81 @@
             flex-direction: column;
         }
 
-        label, input, select {
-            margin-bottom: 10px; /* Отступы между элементами формы */
+        label, input, select, .view-estimations-button {
+            margin-bottom: 10px;
         }
 
         input, select {
-            padding: 10px; /* Внутренние отступы для полей ввода */
-            border: 1px solid #ccc; /* Граница полей ввода */
-            border-radius: 5px; /* Скругление углов полей ввода */
-            width: calc(100% - 22px); /* Ширина полей ввода, вычитаем padding и border */
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"], .view-estimations-button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            color: white;
+            width: auto;
         }
 
         input[type="submit"] {
-            background-color: #007bff; /* Цвет кнопки */
-            color: white; /* Цвет текста кнопки */
-            cursor: pointer; /* Вид курсора при наведении на кнопку */
-            border: none; /* Убрать границу у кнопки */
+            background-color: var(--button-color);
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3; /* Цвет кнопки при наведении */
+            background-color: var(--button-hover-color);
         }
-        .view-estimations-button {
-        background-color: #4CAF50; /* Зеленый фон */
-        color: white; /* Белый текст */
-        padding: 10px 24px; /* Внутренние отступы */
-        border: none; /* Убрать стандартную границу */
-        border-radius: 5px; /* Скругленные углы */
-        text-decoration: none; /* Убрать подчеркивание текста */
-        display: inline-block; /* Сделать кнопку строчно-блочным элементом */
-        font-size: 16px; /* Размер шрифта */
-        margin: 4px 2px; /* Внешние отступы */
-        cursor: pointer; /* Курсор в виде указателя */
-        transition-duration: 0.4s; /* Время анимации */
-    }
 
-    .view-estimations-button:hover {
-        background-color: #45a049; /* Цвет фона при наведении */
-    }
+        .view-estimations-button {
+            background-color: var(--success-button-color);
+        }
+
+        .view-estimations-button:hover {
+            background-color: var(--success-button-hover-color);
+        }
     </style>
 </head>
 <body>
     <div class="calculator-container">
         <h1>Estimate Testing Time</h1>
         <form action="/" method="post">
-            <label for="tester_name">Tester Name:</label>
-            <select id="tester_name" name="tester_name" required>
+            <label for="tester_name">Tester:</label>
+            <select id="tester_name" name="tester_name" required aria-label="Select tester">
                 <option value="Женя">Женя</option>
-                <option value="Сергей"> Сергей </option>
-                <option value="Зарина"> Зарина </option>
-                <option value="Тимур"> Тимур </option>
+                <option value="Сергей">Сергей</option>
+                <option value="Зарина">Зарина</option>
+                <option value="Тимур">Тимур</option>
             </select><br>
 
-            <label for="feature_name">Feature Name:</label>
-            <input type="text" id="feature_name" name="feature_name" required><br>
+            <label for="feature_name">Функциональность:</label>
+            <input type="text" id="feature_name" name="feature_name" required aria-label="Feature name"><br>
 
-            <label for="writing_checks">Writing Checks:</label>
-            <input type="number" id="writing_checks" name="writing_checks" step="any" required><br>
+            <label for="writing_checks">Время написание проверок, мин:</label>
+            <input type="number" id="writing_checks" name="writing_checks" step="any" required aria-label="Time for writing checks in minutes"><br>
 
-            <label for="execution_checks">Execution Checks:</label>
-            <input type="number" id="execution_checks" name="execution_checks" step="any" required><br>
+            <label for="execution_checks">Время прохождение проверок, мин:</label>
+            <input type="number" id="execution_checks" name="execution_checks" step="any" required aria-label="Time for execution checks in minutes"><br>
 
-            <label for="execution_retests">Execution Retests:</label>
-            <input type="number" id="execution_retests" name="execution_retests" step="any" required><br>
+            <label for="execution_retests">Время прохождение ретеста, мин:</label>
+            <input type="number" id="execution_retests" name="execution_retests" step="any" required aria-label="Time for retests in minutes"><br>
 
-            <input type="submit" value="Calculate">
+            <input type="submit" value="Расчёт">
         </form>
         {% if result %}
         <div>
             <h2>Результат расчета: {{ result }}</h2>
         </div>
         {% endif %}
-        <a href="/estimations" class="view-estimations-button">Просмотр оценок</a>
+        <a href="/estimations" class="view-estimations-button" aria-label="View time estimations">Таблица времени</a>
     </div>
 </body>
 </html>
